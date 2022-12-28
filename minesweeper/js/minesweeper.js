@@ -21,6 +21,10 @@ class Sentence
 	{
 		//Возвращает ячейки, о которых известно, что они мины.
 		//--------------------------------Реализуйте самостоятельно-----------
+		if(this.cells.size == this.count)
+		return this.cells
+		else
+		return new Set();
 	}
 
 	known_safes()
@@ -28,7 +32,10 @@ class Sentence
 
 		//Возвращает ячейки, о которых известно, что они безопасны.
 		//--------------------------------Реализуйте самостоятельно-----------
-		
+			if(this.count == 0)
+		return this.cells
+		else
+		return new Set();
 	}
 
 	mark_safe(cell)
@@ -102,23 +109,7 @@ export class MinesweeperAI
 		//Помечает ячейку как мину и обновляет все знания,
 		//чтобы пометить эту ячейку как мину.
 		this.mines.add(cell);
-		for(let i = 0; i < this.knowledge.length; i++)
-		{
-			if(this.knowledge[i].cells.has(cell))
-			{
-				let sent1 = new Sentence(this.knowledge[i].cells, this.knowledge[i].count);
-				sent1.mark_mine(cell);
-				if(this.knowledge[i].cells.size == 0 || this.has_sentence(sent1))
-				{
-					this.knowledge.splice(i, 1);
-					--i;
-				}
-				else
-				{
-					this.knowledge[i] = sent1;
-				} 
-			} 
-		} 
+      this.knowledge.forEach(sentence => sentence.mark_mine(cell));
 	}
 
 	mark_safe(cell)
@@ -126,25 +117,9 @@ export class MinesweeperAI
 		//Помечает ячейку как безопасную и обновляет все знания,
 		//чтобы пометить эту ячейку как безопасную.
 		this.safes.add(cell);
-		for(let i = 0; i < this.knowledge.length; i++)
-		{
-			if(this.knowledge[i].cells.has(cell))
-			{
-				let sent1 = new Sentence(this.knowledge[i].cells, this.knowledge[i].count);
-				sent1.mark_safe(cell);
-				if(this.knowledge[i].cells.size == 0 || this.has_sentence(sent1))
-				{
-					this.knowledge.splice(i, 1);
-					--i; 
-				}
-				else
-				{
-					this.knowledge[i] = sent1;
-				}
-			}
-		}
+		this.knowledge.forEach(sentence => sentence.mark_safe(cell));
 	}
-
+		
 
 	add_knowledge(cell, count)
 	{
