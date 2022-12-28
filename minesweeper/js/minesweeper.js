@@ -43,7 +43,8 @@ class Sentence
 		//Обновляет внутреннее представление знаний, 
 		//учитывая, что ячейка известна как безопасная.
 		//--------------------------------Реализуйте самостоятельно-----------
-
+	this.safes.add(cell);
+		this.knowledge.forEach(sentence => sentence.mark_safe(cell));
 	}
 
 
@@ -52,6 +53,8 @@ class Sentence
 		//Обновляет внутреннее представление знаний, 
 		//учитывая, что ячейка изсвестна как мина.
 		//--------------------------------Реализуйте самостоятельно-----------
+			this.mines.add(cell);
+      this.knowledge.forEach(sentence => sentence.mark_mine(cell));
 	}
 
 	infer_from(sentence2)
