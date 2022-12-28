@@ -53,8 +53,11 @@ class Sentence
 		//Обновляет внутреннее представление знаний, 
 		//учитывая, что ячейка изсвестна как мина.
 		//--------------------------------Реализуйте самостоятельно-----------
-				if(this.cells.has(cell))
-      this.cells.infer(cell);
+					 if (this.cells.has(cell))
+            this.cells.delete(cell);
+            self.count -= 1
+            if (this.count < 0);
+                this.count = 0
 	}
 
 	infer_from(sentence2)
